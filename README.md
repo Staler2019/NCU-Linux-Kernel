@@ -16,7 +16,7 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
     ```.sh
     wget https://mirrors.edge.kernel.org/pub/linux/kernel/v3.0/linux-3.10.104.tar.gz
     tar -xvf linux-3.10.104.tar.gz -C ~/Desktop
-    ```.sh
+    ```
 4. Copy System Kernel Config 
     1. Check `uname -r` First
     2. Run the command and change `uname -r` with actual string
