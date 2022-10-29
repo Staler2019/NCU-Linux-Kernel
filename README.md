@@ -112,7 +112,7 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
    8789 i386   get_segment     sys_get_segment
    ```
 
-4. Re-compile & Install Kernel
+4. Re-compile & Re-install Kernel
 
 ## Compile and Use Your System Calls
 
@@ -129,7 +129,7 @@ sudo apt install libc6-dev-i386 -y
 ### Use Your System Call
 
 1. Use your system call and get return value by using function `syscall(syscall_index, arg...)`
-2. Compile your .c/.cpp file using
+2. Compile your .c/.cpp files using
 
 ```.sh
 gcc -m32 $FILE_NAME -o $FILE_OUT -lpthread -Wall -fPIE
