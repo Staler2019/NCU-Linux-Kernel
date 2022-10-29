@@ -1,5 +1,9 @@
 # custom
 *
+!userland_program
+!userland_program/*
+!userland_program/*.c
+
 !Makefile
 !.gitignore
 !config-4.15.0-112-generic
