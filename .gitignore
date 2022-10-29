@@ -6,7 +6,7 @@
 
 !Makefile
 !.gitignore
-!config-4.15.0-112-generic
+!.config
 !README.md
 
 !custom_syscall
