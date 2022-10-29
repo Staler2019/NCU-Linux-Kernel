@@ -1,4 +1,4 @@
-# Add system call to `kernel 3.10.104`
+# Add System Call to `Kernel 3.10.104`
 
 ## Write Up
 
@@ -8,45 +8,64 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
 
 1. Install `Ubuntu 16.04.7 LTS` on `Virtual Box`
 2. Install Necessary Packages
+
    ```.sh
    sudo apt update && sudo apt install wget build-essential libncurses-dev libssl-dev libelf-dev bison flex -y
    ```
+
 3. Download `Kernel 3.10.104` & Extract it
+
    ```.sh
    wget https://mirrors.edge.kernel.org/pub/linux/kernel/v3.0/linux-3.10.104.tar.gz
    ```
+
    ```.sh
    tar -xvf linux-3.10.104.tar.gz -C ~/Desktop
    ```
+
    > `-C` extract to which folder
+
 4. Copy System Kernel Config
+
    1. Check `uname -r` First
    2. Run the command and change `uname -r` with actual string
+
       ```.sh
-      sudo cp /boot/config-`uname –r` .config
+      sudo cp /boot/config-`uname -r` .config
       ```
+
 5. Set Up Kernel Config
+
    ```.sh
-   sudo make menuconfig                # eg. load config-`uname -r` and exit with save
+   sudo make menuconfig       # eg. load config-`uname -r` and exit with save
    ```
+
 6. Compile Kernel & Install
+
    ```.sh
    sudo make -j5 && sudo make modules_install -j5 && sudo make install -j5
    ```
+
 7. Edit Grub Booting Setting(Because kernel version `4.15.0-112` to `3.10.104`)
+
    ```.sh
    sudo nano /etc/default/grub
    ```
+
    1. Set `GRUB_TIMEOUT=-1`
    2. Comment out all items starting with `GRUB_HIDDEN_TIMEOUT_`
+
    ```.sh
+
    sudo update-grub
-   reboot                              # and select your `kernel-3.10.104` in ubuntu advance option when booting
    ```
+
 8. Reboot the Machine
+
    ```.sh
    reboot
    ```
+
    1. Select `kernel-3.10.104` in ubuntu advance option when booting
 
 ## Create Your Own System Call
@@ -54,20 +73,24 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
 > Please create a folder in the kernel folder, eg. custom_syscall
 
 1. Write Custom System Call and Add Them into Makefile
+
    ```MAKEFILE
    # file: custom_syscall/Makefile
    #
    # custom syscall file & *.c=*.o
    obj-y       := helloworld.o get_phy_addr.o get_segment.o
    ```
+
    ```MAKEFILE
    # file: Makefile
    #
-   core-y		+= kernel/ mm/ fs/ ipc/ security/ crypto/ block/
+   core-y      += kernel/ mm/ fs/ ipc/ security/ crypto/ block/
    # custom_syscall # add below after the above line
-   core-y 		+= custom_syscall/
+   core-y      += custom_syscall/
    ```
+
 2. Add Custom System Call in the Button of `include/linux/syscalls.h`
+
    ```.h
    /* file: include/linux/syscalls.h
    */
@@ -77,7 +100,9 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
    asmlinkage unsigned long sys_get_segment(unsigned long vaddr, void *out); // 8789
    #endif
    ```
+
 3. Add Custom System Call in the Button of `arch/x86/syscalls/syscall_32.tbl`
+
    ```.tbl
    # file: arch/x86/syscalls/syscall_32.tbl
    #
@@ -86,6 +111,7 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
    8788 i386   get_phy_addr    sys_get_phy_addr
    8789 i386   get_segment     sys_get_segment
    ```
+
 4. Re-compile & Install Kernel
 
 ## Compile and Use Your System Calls
