@@ -27,12 +27,9 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
 
 4. Copy System Kernel Config
 
-   1. Check `uname -r` First
-   2. Run the command and change `uname -r` with actual string
-
-      ```.sh
-      sudo cp /boot/config-`uname -r` .config
-      ```
+   ```.sh
+   sudo cp /boot/config-`uname -r` .config
+   ```
 
 5. Set Up Kernel Config
 
@@ -70,7 +67,7 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
 
 ## Create Your Own System Call
 
-> :warning:  Please create a folder in the kernel folder, eg. custom_syscall  :warning:
+> :warning: Please create a folder in the kernel folder, eg. custom_syscall :warning:
 
 1. Write Custom System Call and Add Them into Makefile
 
