@@ -70,7 +70,7 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
 
 ## Create Your Own System Call
 
-> Please create a folder in the kernel folder, eg. custom_syscall
+> :warning:  Please create a folder in the kernel folder, eg. custom_syscall  :warning:
 
 1. Write Custom System Call and Add Them into Makefile
 
