@@ -132,7 +132,7 @@ sudo apt install libc6-dev-i386 -y
    gcc -m32 project1.c -o project1 -lpthread -Wall -fPIE
    ```
 
-3. To see `printk()` message, please execuate like
+3. To see `printk()` message, use `dmesg` command. Eg.
 
    ```.sh
    ./test_helloworld && dmesg | tail
