@@ -135,5 +135,5 @@ sudo apt install libc6-dev-i386 -y
 3. To see `printk()` message, please execuate like
 
    ```.sh
-   ./project1 && dmesg | tail
+   ./test_helloworld && dmesg | tail
    ```
