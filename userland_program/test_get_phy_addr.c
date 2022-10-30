@@ -83,17 +83,19 @@ void *child(void *arg) {
 	task_t *task = arg;
 	sleep(task->sleep);
 	printf("Thread %d\n", task->id);
-	printf("stack addr=%p phy=%lx\n", &stack, get_phy_addr(&stack));
-	printf("tls addr=%p phy=%lx\n", &tls, get_phy_addr(&tls));
-	printf("data addr=%p phy=%lx\n", &data, get_phy_addr(&data));
-	printf("bss addr=%p phy=%lx\n", &bss, get_phy_addr(&bss));
-	printf("heap addr=%p phy=%lx\n", heap, get_phy_addr(heap));
-	printf("text addr=%p phy=%lx\n", &text, get_phy_addr(&text));
-	printf("lib addr=%p phy=%lx\n", lib, get_phy_addr(lib));
+	printf("stack\taddr=%p\tphy=%lx\n", &stack, get_phy_addr(&stack));
+	printf("tls\taddr=%p\tphy=%lx\n", &tls, get_phy_addr(&tls));
+	printf("data\taddr=%p\tphy=%lx\n", &data, get_phy_addr(&data));
+	printf("bss\taddr=%p\tphy=%lx\n", &bss, get_phy_addr(&bss));
+	printf("heap\taddr=%p\tphy=%lx\n", heap, get_phy_addr(heap));
+	printf("text\taddr=%p\tphy=%lx\n", &text, get_phy_addr(&text));
+	printf("lib\taddr=%p\tphy=%lx\n", lib, get_phy_addr(lib));
 
 	segment_t **segments = read_segments();
+	printf("--seg--\t");
 	print_segment(find_segment((long)&stack, segments));
 	free_segments(segments);
+	printf("--------------------------------------\n");
 	return NULL;
 }
 

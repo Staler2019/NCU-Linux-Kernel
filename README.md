@@ -128,6 +128,12 @@ sudo apt install libc6-dev-i386 -y
 1. Use your system call and get return value by using function `syscall(syscall_index, arg...)`
 2. Compile your .c/.cpp files using
 
-```.sh
-gcc -m32 $FILE_NAME -o $FILE_OUT -lpthread -Wall -fPIE
-```
+   ```.sh
+   gcc -m32 project1.c -o project1 -lpthread -Wall -fPIE
+   ```
+
+3. To see `printk()` message, please execuate like
+
+   ```.sh
+   ./project1 && dmesg | tail
+   ```

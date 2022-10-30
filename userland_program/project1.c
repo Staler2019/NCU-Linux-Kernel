@@ -55,12 +55,13 @@ void *child(void *arg) {
 	};
 	for (int i = 0; i < sizeof(addrs) / sizeof(addrs[0]); i++) {
 		segment_t seg;
-		printf("%s addr=%p phy=%p\n", addrs[i].name, addrs[i].addr,
+		printf("%s\taddr=%p\tphy=%p\n", addrs[i].name, addrs[i].addr,
 		       (void *)get_phy_addr(addrs[i].addr));
 		get_segment(addrs[i].addr, &seg);
-		printf("\t");
+		printf("--seg--\t");
 		print_segment(&seg);
 	}
+	printf("--------------------------------------\n");
 	return NULL;
 }
 
