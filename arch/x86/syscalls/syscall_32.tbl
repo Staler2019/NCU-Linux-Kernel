@@ -357,7 +357,13 @@
 348	i386	process_vm_writev	sys_process_vm_writev		compat_sys_process_vm_writev
 349	i386	kcmp			sys_kcmp
 350	i386	finit_module		sys_finit_module
-#custom
-8787 i386   helloworld      sys_helloworld
-8788 i386   get_phy_addr    sys_get_phy_addr
-8789 i386   get_segment     sys_get_segment
+#----------------------------------------custom----------------------------------------#
+# project 1
+8787 i386   helloworld                                  sys_helloworld
+8788 i386   get_phy_addr                                sys_get_phy_addr
+8789 i386   get_segment                                 sys_get_segment
+# project 3
+8790 i386   get_CPU_number                              sys_get_CPU_number
+8791 i386   start_to_count_number_of_process_switches   sys_start_to_count_number_of_process_switches
+8792 i386   stop_to_count_number_of_process_switches    sys_stop_to_count_number_of_process_switches
+#----------------------------------------custom----------------------------------------#

@@ -847,8 +847,14 @@ asmlinkage long sys_kcmp(pid_t pid1, pid_t pid2, int type,
 			 unsigned long idx1, unsigned long idx2);
 asmlinkage long sys_finit_module(int fd, const char __user *uargs, int flags);
 
-// custom
+/*----------------------------------------custom----------------------------------------*/
+// project 1
 asmlinkage int helloworld(void); // 8787
 asmlinkage unsigned long sys_get_phy_addr(unsigned long vaddr); // 8788
 asmlinkage unsigned long sys_get_segment(unsigned long vaddr, void *out); // 8789
+// project 3
+asmlinkage unsigned long sys_get_CPU_number(unsigned long x); // 8790
+asmlinkage unsigned long sys_start_to_count_number_of_process_switches(unsigned long x); // 8791
+asmlinkage unsigned long sys_stop_to_count_number_of_process_switches(unsigned long x); // 8792
+/*----------------------------------------custom----------------------------------------*/
 #endif

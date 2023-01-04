@@ -2,9 +2,25 @@
 
 > `Kernel 3.10.104`
 
-## Write Up
+## Members
 
-Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
+```.txt
+楊佳峻
+方廷宇
+吳榕憲
+```
+
+## Writeup
+
+- Project 1
+  - [題目](https://staff.csie.ncu.edu.tw/hsufh/COURSES/FALL2022/linux_project_1.html)
+  - [Writeup](https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ)
+- Project 2
+  - [題目](https://hackmd.io/6EoEXt9qTE6pxv3Q2FdsRQ)
+  - [Writeup](https://hackmd.io/QzfGLb7wSKu0f1D5elH6NA)
+- Project 3
+  - [題目](https://staff.csie.ncu.edu.tw/hsufh/COURSES/FALL2022/linux_project_3.html)
+  - [Writeup](https://hackmd.io/Y5rPO7-8Qy2AMBcHMtRc8w)
 
 ## VM Set Up
 
@@ -27,6 +43,10 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
    ```
 
    > `-C` extract to which folder
+
+   ```.sh
+   cd ~/Desktop/linux-3.10.104/
+   ```
 
 3. Set Up Kernel Config
 
@@ -77,37 +97,41 @@ Please see https://hackmd.io/mkpUU-2JRSGZH3Blhp0LQQ
 
    ```MAKEFILE
    # file: custom_syscall/Makefile
-   #
+
    # custom syscall file & *.c=*.o
    obj-y       := helloworld.o get_phy_addr.o get_segment.o
    ```
 
    ```MAKEFILE
    # file: Makefile
-   #
+
+   # ...
    core-y      += kernel/ mm/ fs/ ipc/ security/ crypto/ block/
    # custom_syscall # add below after the above line
    core-y      += custom_syscall/
+   # ...
    ```
 
 2. Add Custom System Call in the Button of `include/linux/syscalls.h`
 
    ```.h
-   /* file: include/linux/syscalls.h
-   */
-   // custom // add before `#endif`
+   // file: include/linux/syscalls.h
+
+   // ...
+   // custom // add at the end before `#endif`
    asmlinkage int helloworld(void); // 8787
    asmlinkage unsigned long sys_get_phy_addr(unsigned long vaddr); // 8788
    asmlinkage unsigned long sys_get_segment(unsigned long vaddr, void *out); // 8789
    #endif
    ```
 
-3. Add Custom System Call in the Button of `arch/x86/syscalls/syscall_32.tbl`
+3. Add Custom System Call in the Button of `arch/x86/syscalls/syscall_32.tbl`(32 bits)
 
    ```.tbl
    # file: arch/x86/syscalls/syscall_32.tbl
-   #
-   # custom
+
+   # ...
+   # custom # add at the end
    8787 i386   helloworld      sys_helloworld
    8788 i386   get_phy_addr    sys_get_phy_addr
    8789 i386   get_segment     sys_get_segment

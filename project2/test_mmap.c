@@ -1,10 +1,13 @@
 #include <dlfcn.h>
-#include <pthread.h>
 #include <stdint.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/mman.h>
 #include <unistd.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <sys/wait.h>
+#include <sys/types.h>
 
 // declare variables to print later
 int data = 0x8763;
@@ -13,6 +16,7 @@ int *heap;  // initialized in main
 __thread long tls;
 void text() {}
 void *lib;  // initialized in main
+int *tmp; // initialized in main
 
 // thread data
 typedef struct {
@@ -43,25 +47,41 @@ typedef struct {
 	void *addr;
 } child_info_t;
 
-void *child(void *arg) {
+int shm_get()
+{
+	int fd = open("./t.txt", O_RDWR );
+	if(fd<0){
+		printf("Failed to Open File\n");
+		return 0;
+	}
+	tmp = mmap ( NULL, 10*sizeof(int), PROT_READ | PROT_WRITE, MAP_SHARED, fd, 0 );
+	if(tmp == MAP_FAILED){
+		printf("Mapping Failed\n");
+		return 0;
+	}
+	*tmp=87638763;
+
+	printf("\n");
+	return 1;
+}
+
+void *child(){
 	long stack;
-	task_t *task = arg;
-	sleep(task->sleep);
-	printf("Thread %d\n", task->id);
+
+	printf("tmp=%i\n",*tmp);
 
 	child_info_t addrs[] = {
 	    {"stack", &stack}, {"tls", &tls},   {"data", &data}, {"bss", &bss},
-	    {"heap", heap},    {"text", &text}, {"lib", lib},
+	    {"heap", heap},    {"text", &text}, {"lib", lib}, {"mmap", tmp}
 	};
 	for (int i = 0; i < sizeof(addrs) / sizeof(addrs[0]); i++) {
 		segment_t seg;
-		printf("%s\taddr=%p\tphy=%p\n", addrs[i].name, addrs[i].addr,
+		printf("%s addr=%p phy=%p\n", addrs[i].name, addrs[i].addr,
 		       (void *)get_phy_addr(addrs[i].addr));
 		get_segment(addrs[i].addr, &seg);
-		printf("--seg--\t");
+		printf("\t");
 		print_segment(&seg);
 	}
-	printf("--------------------------------------\n");
 	return NULL;
 }
 
@@ -70,18 +90,22 @@ const int MAX_THREAD = 2;
 int main() {
 	heap = malloc(0x10);
 	lib = &printf;
+    	if(!shm_get()){
+		printf("Mmap failed");
+	}
+	pid_t pid;
+	pid = fork();
+	if (pid == 0) {
+		sleep(1);
+		printf("Child:\n");
+		child();
+	} else if (pid > 0) {
+		printf("Parent:\n");
+		child();
+		wait(0);
+	} else {
+		printf("Error!n");
+	}
 
-	pthread_t threads[MAX_THREAD];
-	task_t tasks[MAX_THREAD];
-	task_t main_task = {.id = 0, .sleep = 0};
-	child(&main_task);
-	for (int i = 0; i < MAX_THREAD; i++) {
-		tasks[i].id = i + 1;
-		tasks[i].sleep = i + 1;
-		pthread_create(&threads[i], NULL, child, (void *)&tasks[i]);
-	}
-	for (int i = 0; i < MAX_THREAD; i++) {
-		pthread_join(threads[i], NULL);
-	}
 	return 0;
 }

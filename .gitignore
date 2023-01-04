@@ -1,8 +1,16 @@
 # custom
 *
-!userland_program
-userland_program/*
-!userland_program/*.c
+!project1
+!project1/*.c
+
+!project2
+!project2/*.c
+
+!project3
+!project3/getCPUNumber
+!project3/getCPUNumber/*.c
+!project3/processSwitches
+!project3/processSwitches/*.c
 
 !Makefile
 !.gitignore
@@ -10,25 +18,21 @@ userland_program/*
 !README.md
 
 !custom_syscall
-custom_syscall/*
+!custom_syscall/*c
 !custom_syscall/Makefile
-!custom_syscall/helloworld.c
-!custom_syscall/get_phy_addr.c
-!custom_syscall/get_segment.c
 
 !include
-include/*
 !include/linux
-include/linux/*
 !include/linux/syscalls.h
+!include/linux/sched.h
 
 !arch
-arch/*
 !arch/x86
-arch/x86/*
 !arch/x86/syscalls
-arch/x86/syscalls/*
 !arch/x86/syscalls/syscall_32.tbl
+!arch/x86/include
+!arch/x86/include/asm
+!arch/x86/include/asm/switch_to.h
 
 
 # #
